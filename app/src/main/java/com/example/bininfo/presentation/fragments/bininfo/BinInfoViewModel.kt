@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bininfo.domain.entities.BinInfo
 import com.example.bininfo.domain.usecase.BinUseCase
 import kotlinx.coroutines.launch
 
@@ -19,8 +20,8 @@ class BinInfoViewModel(
         binUseCase.loadNewBin(binId)
     }
 
-    fun getBinInfo(binId: String) {
-        binUseCase.getBinInfo(binId)
+    fun getBinInfo(binId: String): LiveData<BinInfo> {
+        return binUseCase.getBinInfo(binId)
     }
 
     fun deleteBinById(binId: String) = viewModelScope.launch {

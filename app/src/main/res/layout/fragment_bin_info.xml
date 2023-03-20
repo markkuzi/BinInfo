@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/purple_200"
+    tools:context=".presentation.fragments.bininfo.BinInfoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_id_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/bin_info_id_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@id/tv_bin_id_head"
+        tools:text="4353245" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_scheme_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@id/tv_bin_id"
+        android:text="@string/bin_info_scheme_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_scheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_scheme_head"
+        tools:text="visa" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_brand_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_scheme"
+        android:text="@string/bin_info_brand_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_brand_head"
+        tools:text="VISA" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_number_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_brand"
+        android:text="@string/bin_info_number_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_length_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_bin_card_luhn_head"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_number_head"
+        android:text="@string/bin_info_length_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_luhn_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_length_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_number_head"
+        android:text="@string/bin_info_luhn_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_bin_card_length_head"
+        app:layout_constraintStart_toStartOf="@+id/tv_bin_card_length_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_length_head"
+        tools:text="16" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_luhn_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_luhn_set"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/tv_bin_card_luhn_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_luhn_head"
+        android:text="@string/bin_info_yes" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_luhn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_bin_card_luhn_no"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_luhn_yes"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_luhn_head"
+        android:text="@string/bin_info_set" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_luhn_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_bin_card_luhn_head"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_luhn_set"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_luhn_head"
+        android:text="@string/bin_info_no" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_type_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_luhn_no"
+        android:text="@string/bin_info_type_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_type_debit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_type_set"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_type_head"
+        android:text="@string/bin_info_type_debit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_type_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_type_credit"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_type_debit"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_type_head"
+        android:text="@string/bin_info_set" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_type_credit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_type_set"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_type_head"
+        android:text="@string/bin_info_type_credit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_prepaid_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_type_credit"
+        android:text="@string/bin_info_prepaid_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_prepaid_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_prepaid_set"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_prepaid_head"
+        android:text="@string/bin_info_yes" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_prepaid_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_prepaid_no"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_prepaid_yes"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_prepaid_head"
+        android:text="@string/bin_info_set" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_prepaid_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_prepaid_set"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_prepaid_head"
+        android:text="@string/bin_info_no" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_country_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_prepaid_no"
+        android:text="@string/bin_info_country_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_country_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_country_name"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_country_head"
+        tools:text="dk" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_country_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_country_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_country_head"
+        tools:text="Denmark" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_country_coordinate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_country_name"
+        tools:text="@string/bin_info_country_coordinate" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_country_coordinate"
+        android:text="@string/bin_info_bank_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_bank_set"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_head"
+        tools:text="Jyske Bank" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_bin_card_bank_address"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_bank_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_head"
+        android:text="@string/bin_info_bank_set" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@+id/tv_bin_card_bank_set"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_head"
+        tools:text="Hjørring" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_address"
+        tools:text="www.jyskebank.dk" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_bin_card_bank_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+        app:layout_constraintStart_toEndOf="@id/start_guide_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_site"
+        tools:text="+4589893300" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_phone"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@id/start_guide_line"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete"
+            android:backgroundTint="@color/teal_200"
+            android:text="@string/btn_back"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_bin_card_bank_phone"
+            app:layout_constraintEnd_toEndOf="@id/end_guide_line"
+            app:layout_constraintStart_toEndOf="@id/btn_back"
+            android:backgroundTint="@color/teal_200"
+            android:text="@string/btn_delete"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

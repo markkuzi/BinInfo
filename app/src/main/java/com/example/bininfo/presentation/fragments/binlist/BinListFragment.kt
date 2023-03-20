@@ -20,7 +20,7 @@ class BinListFragment : Fragment() {
 
     private var _binding: FragmentBinListBinding? = null
     private val binding: FragmentBinListBinding
-        get() = _binding ?: throw RuntimeException("FragmentBinListBinding is null")
+        get() = _binding ?: throw RuntimeException(BINDING_ERROR)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +87,10 @@ class BinListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val BINDING_ERROR = "FragmentBinListBinding is null"
     }
 
 }
