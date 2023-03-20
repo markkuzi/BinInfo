@@ -19,7 +19,7 @@ class BinUseCase(private val binCall: BinCall) {
         return binCall.getBinList()
     }
 
-    fun getPendingStatus(): Boolean? {
+    fun getPendingStatus(): Boolean {
         return binCall.getPendingStatus()
     }
 
