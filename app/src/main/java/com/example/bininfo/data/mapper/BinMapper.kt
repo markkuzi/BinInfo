@@ -32,6 +32,46 @@ class BinMapper {
         bankCity = dto.bank?.city ?: RESULT_IF_NULL
     )
 
+    fun mapDbToModelIfNoResult(binId: String) = BinInfoDbModel(
+        binId = binId,
+        date = getTime(),
+        status = Status.NO_RESULT,
+        numberLength = null,
+        nuberLuhn = null,
+        scheme = null,
+        type = null,
+        brand = null,
+        prepaid = null,
+        countryName = null,
+        countryEmoji = null,
+        countryLatitude = null,
+        countryLongitude = null,
+        bankName = null,
+        bankUrl = null,
+        bankPhone = null,
+        bankCity = null
+    )
+
+    fun mapDbToModelIfError(binId: String) = BinInfoDbModel(
+        binId = binId,
+        date = getTime(),
+        status = Status.ERROR,
+        numberLength = null,
+        nuberLuhn = null,
+        scheme = null,
+        type = null,
+        brand = null,
+        prepaid = null,
+        countryName = null,
+        countryEmoji = null,
+        countryLatitude = null,
+        countryLongitude = null,
+        bankName = null,
+        bankUrl = null,
+        bankPhone = null,
+        bankCity = null
+    )
+
     fun mapDbToEntityBinInfo(dbModel: BinInfoDbModel) = BinInfo(
         binId = dbModel.binId,
         date = convertTimestampToTime(dbModel.date),
@@ -59,7 +99,7 @@ class BinMapper {
     )
 
 
-    fun getTime(): Long {
+    private fun getTime(): Long {
         val date = Calendar.getInstance()
         return date.timeInMillis
     }

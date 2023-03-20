@@ -12,7 +12,7 @@ interface BinCall {
 
     fun getBinList(): LiveData<List<BinList>>
 
-    fun getPendingStatus(): Boolean?
+    fun getPendingStatus(): Boolean
 
     suspend fun deleteBinById(binId: String)
 
