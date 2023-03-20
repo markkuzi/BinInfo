@@ -9,6 +9,8 @@ import com.example.bininfo.data.repository.datasourceimpl.bin.BinDataSourceImpl
 import com.example.bininfo.data.repository.repository.BinRepository
 import com.example.bininfo.domain.repository.BinCall
 import com.example.bininfo.domain.usecase.BinUseCase
+import com.example.bininfo.presentation.BinInfoViewModel
+import com.example.bininfo.presentation.BinListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
