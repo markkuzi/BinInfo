@@ -3,4 +3,24 @@
     <string name="bin_id_name">Bin ID:</string>
     <string name="bin_date_name">Дата запроса:</string>
     <string name="bin_status_name">Статус запроса:</string>
+    <string name="bin_info_id_head">First digits of a card number (BIN/IIN):</string>
+    <string name="bin_info_scheme_head">SCHEME / NETWORK</string>
+    <string name="bin_info_brand_head">BRAND</string>
+    <string name="bin_info_number_head">CARD NUMBER</string>
+    <string name="bin_info_length_head">LENGTH</string>
+    <string name="bin_info_luhn_head">LUHN</string>
+    <string name="bin_info_yes">Yes</string>
+    <string name="bin_info_no">No</string>
+    <string name="bin_info_set">/</string>
+    <string name="bin_info_bank_set">,\u0020</string>
+    <string name="bin_info_type_head">TYPE</string>
+    <string name="bin_info_type_debit">Debit</string>
+    <string name="bin_info_type_credit">Credit</string>
+    <string name="bin_info_prepaid_head">PREPAID</string>
+    <string name="bin_info_country_head">COUNTRY</string>
+    <string name="bin_info_country_coordinate">(latitude: %s, longitude: %s)</string>
+    <string name="bin_info_bank_head">BANK</string>
+    <string name="btn_back">BACK</string>
+    <string name="btn_delete">DELETE</string>
+
 </resources>
