@@ -37,10 +37,8 @@ class BinInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         setupBinInfo()
-
-
+        setupPending()
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -50,8 +48,18 @@ class BinInfoFragment : Fragment() {
             binInfoViewModel.deleteBinById(binId)
             findNavController().popBackStack()
         }
+    }
 
-
+    private fun setupPending() {
+        binInfoViewModel.pendingStatus.observe(viewLifecycleOwner) {
+            if (!it) {
+                binding.container.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.container.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+            }
+        }
     }
 
     private fun setupBinInfo() {
@@ -129,13 +137,17 @@ class BinInfoFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
         private const val CREDIT_CARD = "credit"
         private const val DEBIT_CARD = "debit"
         private const val BINDING_ERROR = "FragmentBinInfoBinding is null"
         private const val DEFAULT_BIN_ID = ""
         const val KEY_NEW_BIN = "new_bin"
-        const val KEY_BIN = "old_bin"
     }
 
 

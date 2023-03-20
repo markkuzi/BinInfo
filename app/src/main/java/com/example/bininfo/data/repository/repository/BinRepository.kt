@@ -1,10 +1,9 @@
 package com.example.bininfo.data.repository.repository
 
 import androidx.lifecycle.LiveData
-import com.example.bininfo.data.mapper.BinMapper
+import com.example.bininfo.data.localdb.model.BinInfoModel
 import com.example.bininfo.data.repository.datasource.bin.BinApiDataSource
 import com.example.bininfo.data.repository.datasource.bin.BinDataSource
-import com.example.bininfo.domain.entities.BinInfo
 import com.example.bininfo.domain.entities.BinList
 import com.example.bininfo.domain.repository.BinCall
 
@@ -13,7 +12,7 @@ class BinRepository(
     private val binApiDataSource: BinApiDataSource
 ) : BinCall {
 
-    override fun getBinInfo(binId: String): LiveData<BinInfo> {
+    override fun getBinInfo(binId: String): LiveData<BinInfoModel> {
         return binDataSource.getBinInfo(binId)
     }
 
@@ -25,7 +24,7 @@ class BinRepository(
         return binDataSource.loadBinList()
     }
 
-    override fun getPendingStatus(): Boolean {
+    override fun getPendingStatus(): LiveData<Boolean> {
         return binApiDataSource.getPendingStatus()
     }
 

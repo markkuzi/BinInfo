@@ -1,6 +1,8 @@
 package com.example.bininfo.data.repository.datasourceimpl.bin
 
-import com.example.bininfo.data.localdb.model.BinInfoDbModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.bininfo.data.localdb.model.BinInfoModel
 import com.example.bininfo.data.mapper.BinMapper
 import com.example.bininfo.data.network.ApiFactory
 import com.example.bininfo.data.repository.datasource.bin.BinApiDataSource
@@ -11,28 +13,35 @@ class BinApiDataSourceImpl(
 ) : BinApiDataSource {
 
     private val mapper = BinMapper()
-    private var pendingStatus: Boolean = false
+    private var _pendingStatus = MutableLiveData<Boolean>()
+    private val pendingStatus: LiveData<Boolean> = _pendingStatus
+
+    private var _errorStatus = MutableLiveData<Boolean>()
+    private val errorStatus: LiveData<Boolean> = _errorStatus
 
     override suspend fun loadNewBin(binId: String) {
-        pendingStatus = true
+        _pendingStatus.postValue(false)
+        _errorStatus.postValue(false)
 
-        val binInfo: BinInfoDbModel = try {
+        var binInfo: BinInfoModel
+        try {
             val response = ApiFactory.apiService?.loadNewBin(binId)
-            if (response?.isSuccessful!! && response.body() != null) {
+            binInfo = if (response?.isSuccessful!! && response.body() != null) {
                 mapper.mapDtoToDbModel(response.body()!!, binId)
 
             } else {
                 mapper.mapDbToModelIfNoResult(binId)
             }
         } catch (e: Exception) {
-            mapper.mapDbToModelIfError(binId)
+            binInfo = mapper.mapDbToModelIfError(binId)
+            _errorStatus.postValue(true)
         }
         binDataSource.insert(binInfo)
-        pendingStatus = false
+        _pendingStatus.postValue(true)
 
     }
 
-    override fun getPendingStatus(): Boolean {
+    override fun getPendingStatus(): LiveData<Boolean> {
         return pendingStatus
     }
 }
