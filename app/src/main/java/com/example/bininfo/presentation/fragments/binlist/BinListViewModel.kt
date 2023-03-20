@@ -1,4 +1,4 @@
-package com.example.bininfo.presentation
+package com.example.bininfo.presentation.fragments.binlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +13,10 @@ class BinListViewModel(
 
     fun deleteBinById(binId: String) = viewModelScope.launch {
         binUseCase.deleteBinById(binId)
+    }
+
+    fun loadNewBin(binId: String) = viewModelScope.launch {
+        binUseCase.loadNewBin(binId)
     }
 
 }

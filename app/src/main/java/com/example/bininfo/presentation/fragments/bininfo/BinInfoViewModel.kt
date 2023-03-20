@@ -1,4 +1,4 @@
-package com.example.bininfo.presentation
+package com.example.bininfo.presentation.fragments.bininfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
