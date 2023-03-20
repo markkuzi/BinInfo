@@ -15,6 +15,7 @@ class BinInfoFragment : Fragment() {
 
     private val binInfoViewModel: BinInfoViewModel by viewModel()
     private var binId: String = DEFAULT_BIN_ID
+    private var loadStatus = false
 
     private var _binding: FragmentBinInfoBinding? = null
     private val binding: FragmentBinInfoBinding
@@ -36,6 +37,9 @@ class BinInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (loadStatus) {
+            binInfoViewModel.loadNewBin(binId)
+        }
 
         setupBinInfo()
         setupPending()
@@ -135,6 +139,9 @@ class BinInfoFragment : Fragment() {
         requireArguments().getString(KEY_NEW_BIN)?.let {
             binId = it
         }
+        requireArguments().getBoolean(KEY_LOAD_BIN).let {
+            loadStatus = it
+        }
     }
 
     override fun onDestroyView() {
@@ -148,6 +155,7 @@ class BinInfoFragment : Fragment() {
         private const val BINDING_ERROR = "FragmentBinInfoBinding is null"
         private const val DEFAULT_BIN_ID = ""
         const val KEY_NEW_BIN = "new_bin"
+        const val KEY_LOAD_BIN = "load_bin"
     }
 
 

@@ -24,5 +24,7 @@
     <string name="btn_delete">DELETE</string>
     <string name="bin_info_error">Internet not working</string>
     <string name="try_again">TRY AGAIN</string>
+    <string name="enter_bin">Enter first digits of a card number (BIN/IIN)</string>
+    <string name="add_new_binn">SEARCH BIN INFO</string>
 
 </resources>

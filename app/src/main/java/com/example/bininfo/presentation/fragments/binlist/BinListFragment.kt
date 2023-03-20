@@ -13,7 +13,6 @@ import com.example.bininfo.databinding.FragmentBinListBinding
 import com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment
 import com.example.bininfo.presentation.fragments.binlist.adapter.BinListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.random.Random
 
 class BinListFragment : Fragment() {
 
@@ -40,9 +39,9 @@ class BinListFragment : Fragment() {
 
 
         binding.buttonAddNewBin.setOnClickListener {
-            val binId = Random.nextInt(4000, 40000000).toString()
-            binListViewModel.loadNewBin(binId)
-            launchBinInfoFragment(binId)
+            val addNewBin = AddNewBinFragment()
+            addNewBin.show(requireActivity().supportFragmentManager, DIALOG_FRAGMENT_NAME)
+
         }
 
 
@@ -56,7 +55,8 @@ class BinListFragment : Fragment() {
         }
 
         setupClickListener()
-        setupSwipeListener()
+        setupSwipeLeftListener()
+        setupSwipeRightListener()
     }
 
     private fun setupClickListener() {
@@ -65,7 +65,7 @@ class BinListFragment : Fragment() {
         }
     }
 
-    private fun setupSwipeListener() {
+    private fun setupSwipeLeftListener() {
         val callback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT
@@ -88,6 +88,30 @@ class BinListFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.rvBinList)
     }
 
+    private fun setupSwipeRightListener() {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = binListAdapter.currentList[viewHolder.adapterPosition]
+                binListViewModel.loadNewBin(item.binId)
+                launchBinInfoFragment(item.binId)
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.rvBinList)
+    }
+
     private fun launchBinInfoFragment(binId: String) {
         val args = Bundle().apply {
             putString(BinInfoFragment.KEY_NEW_BIN, binId)
@@ -102,6 +126,7 @@ class BinListFragment : Fragment() {
 
     companion object {
         private const val BINDING_ERROR = "FragmentBinListBinding is null"
+        private const val DIALOG_FRAGMENT_NAME = "addNewBin"
     }
 
 }
