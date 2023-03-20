@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/binListFragment">
+
+    <fragment
+        android:id="@+id/binListFragment"
+        android:name="com.example.bininfo.presentation.fragments.binlist.BinListFragment"
+        android:label="fragment_bin_list"
+        tools:layout="@layout/fragment_bin_list" >
+        <action
+            android:id="@+id/action_binListFragment_to_binInfoFragment"
+            app:destination="@id/binInfoFragment"
+            app:popUpTo="@id/binListFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/binInfoFragment"
+        android:name="com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment"
+        android:label="fragment_bin_info"
+        tools:layout="@layout/fragment_bin_info" />
+</navigation>
