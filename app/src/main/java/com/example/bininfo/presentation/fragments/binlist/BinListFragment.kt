@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bininfo.R
 import com.example.bininfo.databinding.FragmentBinListBinding
+import com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment
 import com.example.bininfo.presentation.fragments.binlist.adapter.BinListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.random.Random
@@ -38,7 +41,9 @@ class BinListFragment : Fragment() {
 
 
         binding.buttonAddShopItem.setOnClickListener {
-            binListViewModel.loadNewBin(Random.nextInt(4000, 40000000).toString())
+            val binId = Random.nextInt(4000, 40000000).toString()
+            binListViewModel.loadNewBin(binId)
+            launchBinInfoFragment(binId)
         }
 
 
@@ -57,7 +62,7 @@ class BinListFragment : Fragment() {
 
     private fun setupClickListener() {
         binListAdapter.onBinItemListClickListener = {
-            Toast.makeText(requireContext(), it.status.toString(), Toast.LENGTH_LONG).show()
+            launchBinInfoFragment(it.binId)
         }
     }
 
@@ -82,6 +87,13 @@ class BinListFragment : Fragment() {
         }
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(binding.rvBinList)
+    }
+
+    private fun launchBinInfoFragment(binId: String) {
+        val args = Bundle().apply {
+            putString(BinInfoFragment.KEY_NEW_BIN, binId)
+        }
+        findNavController().navigate(R.id.action_binListFragment_to_binInfoFragment, args)
     }
 
     override fun onDestroyView() {

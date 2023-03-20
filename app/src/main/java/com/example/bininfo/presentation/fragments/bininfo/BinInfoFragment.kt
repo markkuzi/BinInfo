@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.bininfo.R
 import com.example.bininfo.databinding.FragmentBinInfoBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -13,11 +14,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class BinInfoFragment : Fragment() {
 
     private val binInfoViewModel: BinInfoViewModel by viewModel()
-    private val binId: String = DEFAULT_BIN_ID
+    private var binId: String = DEFAULT_BIN_ID
 
     private var _binding: FragmentBinInfoBinding? = null
     private val binding: FragmentBinInfoBinding
         get() = _binding ?: throw RuntimeException(BINDING_ERROR)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parseArgs()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,11 +40,15 @@ class BinInfoFragment : Fragment() {
 
         setupBinInfo()
 
+
+
         binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         binding.btnDelete.setOnClickListener {
             binInfoViewModel.deleteBinById(binId)
+            findNavController().popBackStack()
         }
 
 
@@ -113,11 +123,19 @@ class BinInfoFragment : Fragment() {
         }
     }
 
+    private fun parseArgs() {
+        requireArguments().getString(KEY_NEW_BIN)?.let {
+            binId = it
+        }
+    }
+
     companion object {
         private const val CREDIT_CARD = "credit"
         private const val DEBIT_CARD = "debit"
         private const val BINDING_ERROR = "FragmentBinInfoBinding is null"
         private const val DEFAULT_BIN_ID = ""
+        const val KEY_NEW_BIN = "new_bin"
+        const val KEY_BIN = "old_bin"
     }
 
 
