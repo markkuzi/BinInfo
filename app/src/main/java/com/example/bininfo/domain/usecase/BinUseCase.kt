@@ -1,13 +1,13 @@
 package com.example.bininfo.domain.usecase
 
 import androidx.lifecycle.LiveData
-import com.example.bininfo.domain.entities.BinInfo
+import com.example.bininfo.data.localdb.model.BinInfoModel
 import com.example.bininfo.domain.entities.BinList
 import com.example.bininfo.domain.repository.BinCall
 
 class BinUseCase(private val binCall: BinCall) {
 
-    fun getBinInfo(binId: String): LiveData<BinInfo> {
+    fun getBinInfo(binId: String): LiveData<BinInfoModel> {
         return binCall.getBinInfo(binId)
     }
 
@@ -19,7 +19,7 @@ class BinUseCase(private val binCall: BinCall) {
         return binCall.getBinList()
     }
 
-    fun getPendingStatus(): Boolean {
+    fun getPendingStatus(): LiveData<Boolean> {
         return binCall.getPendingStatus()
     }
 

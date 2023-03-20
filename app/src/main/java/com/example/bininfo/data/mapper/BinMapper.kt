@@ -1,6 +1,6 @@
 package com.example.bininfo.data.mapper
 
-import com.example.bininfo.data.localdb.model.BinInfoDbModel
+import com.example.bininfo.data.localdb.model.BinInfoModel
 import com.example.bininfo.data.localdb.model.BinListDb
 import com.example.bininfo.data.network.model.BinInfoDto
 import com.example.bininfo.domain.entities.BinInfo
@@ -12,7 +12,7 @@ import java.util.*
 
 class BinMapper {
 
-    fun mapDtoToDbModel(dto: BinInfoDto, binId: String) = BinInfoDbModel(
+    fun mapDtoToDbModel(dto: BinInfoDto, binId: String) = BinInfoModel(
         binId = binId,
         date = getTime(),
         status = Status.SUCCESS,
@@ -32,7 +32,7 @@ class BinMapper {
         bankCity = dto.bank?.city ?: RESULT_IF_NULL
     )
 
-    fun mapDbToModelIfNoResult(binId: String) = BinInfoDbModel(
+    fun mapDbToModelIfNoResult(binId: String) = BinInfoModel(
         binId = binId,
         date = getTime(),
         status = Status.NO_RESULT,
@@ -52,7 +52,7 @@ class BinMapper {
         bankCity = null
     )
 
-    fun mapDbToModelIfError(binId: String) = BinInfoDbModel(
+    fun mapDbToModelIfError(binId: String) = BinInfoModel(
         binId = binId,
         date = getTime(),
         status = Status.ERROR,
@@ -72,25 +72,6 @@ class BinMapper {
         bankCity = null
     )
 
-    fun mapDbToEntityBinInfo(dbModel: BinInfoDbModel) = BinInfo(
-        binId = dbModel.binId,
-        date = convertTimestampToTime(dbModel.date),
-        status = dbModel.status,
-        numberLength = dbModel.numberLength,
-        nuberLuhn = dbModel.nuberLuhn,
-        scheme = dbModel.scheme,
-        type = dbModel.type,
-        brand = dbModel.brand,
-        prepaid = dbModel.prepaid,
-        countryName = dbModel.countryName,
-        countryEmoji = dbModel.countryEmoji,
-        countryLatitude = dbModel.countryLatitude,
-        countryLongitude = dbModel.countryLongitude,
-        bankName = dbModel.bankName,
-        bankUrl = dbModel.bankUrl,
-        bankPhone = dbModel.bankPhone,
-        bankCity = dbModel.bankCity
-    )
 
     fun mapDbToEntityBinList(dbModel: BinListDb) = BinList(
         binId = dbModel.binId,

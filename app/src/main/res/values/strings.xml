@@ -22,5 +22,7 @@
     <string name="bin_info_bank_head">BANK</string>
     <string name="btn_back">BACK</string>
     <string name="btn_delete">DELETE</string>
+    <string name="bin_info_error">Internet not working</string>
+    <string name="try_again">TRY AGAIN</string>
 
 </resources>

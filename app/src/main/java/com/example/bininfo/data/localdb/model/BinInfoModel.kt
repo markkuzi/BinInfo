@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.bininfo.domain.entities.Status
 
 @Entity(tableName = "bin_info_list")
-data class BinInfoDbModel(
+data class BinInfoModel(
     @PrimaryKey
     @ColumnInfo(name = "binId")
     val binId: String,

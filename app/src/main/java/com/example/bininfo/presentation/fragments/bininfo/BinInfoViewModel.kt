@@ -1,26 +1,17 @@
 package com.example.bininfo.presentation.fragments.bininfo
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bininfo.domain.entities.BinInfo
+import com.example.bininfo.data.localdb.model.BinInfoModel
 import com.example.bininfo.domain.usecase.BinUseCase
 import kotlinx.coroutines.launch
 
 class BinInfoViewModel(
     private val binUseCase: BinUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    private val _pendingStatus = MutableLiveData<Boolean?>()
-    val pendingStatus: LiveData<Boolean?>
-        get() = _pendingStatus
-
-    fun loadNewBin(binId: String) = viewModelScope.launch {
-        binUseCase.loadNewBin(binId)
-    }
-
-    fun getBinInfo(binId: String): LiveData<BinInfo> {
+    fun getBinInfo(binId: String): LiveData<BinInfoModel> {
         return binUseCase.getBinInfo(binId)
     }
 
@@ -28,8 +19,7 @@ class BinInfoViewModel(
         binUseCase.deleteBinById(binId)
     }
 
-    fun getPendingStatus() {
-        _pendingStatus.value = binUseCase.getPendingStatus()
-    }
+    val pendingStatus = binUseCase.getPendingStatus()
+
 
 }
