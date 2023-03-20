@@ -15,6 +15,10 @@ class BinInfoViewModel(
         return binUseCase.getBinInfo(binId)
     }
 
+    fun loadNewBin(binId: String) = viewModelScope.launch {
+        binUseCase.loadNewBin(binId)
+    }
+
     fun deleteBinById(binId: String) = viewModelScope.launch {
         binUseCase.deleteBinById(binId)
     }
