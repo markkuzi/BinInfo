@@ -29,12 +29,15 @@ class BinApiDataSourceImpl(
                 response.body().let { res ->
                     val data = res?.let { mapper.mapDtoToEntityModel(it, binId) }
                     _binInfo.value = NetworkResult.Success(data)
+                    binDataSource.insert(mapper.mapDtoToDbModel(res, binId))
                 }
             } else {
                 _binInfo.value = NetworkResult.Error(Status.NO_RESULT)
+                binDataSource.insert(mapper.mapDtoToDbModelIfEmpty(binId))
             }
         } catch (e: Exception) {
             _binInfo.value = NetworkResult.Error(Status.ERROR)
+            binDataSource.insert(mapper.mapDtoToDbModelIfError(binId))
         }
     }
 

@@ -12,24 +12,64 @@ import java.util.*
 
 class BinMapper {
 
-    fun mapDtoToDbModel(dto: BinInfoDto, binId: String) = BinInfoDbModel(
+    fun mapDtoToDbModel(dto: BinInfoDto?, binId: String) = BinInfoDbModel(
         binId = binId,
         date = getTime(),
         status = Status.SUCCESS,
-        numberLength = dto.number?.length ?: RESULT_IF_NULL,
-        nuberLuhn = dto.number?.luhn,
-        scheme = dto.scheme ?: RESULT_IF_NULL,
-        type = dto.type,
-        brand = dto.brand ?: RESULT_IF_NULL,
-        prepaid = dto.prepaid,
-        countryName = dto.country?.name ?: RESULT_IF_NULL,
-        countryEmoji = dto.country?.emoji ?: RESULT_IF_NULL,
-        countryLatitude = dto.country?.latitude ?: RESULT_IF_NULL,
-        countryLongitude = dto.country?.longitude ?: RESULT_IF_NULL,
-        bankName = dto.bank?.name ?: RESULT_IF_NULL,
-        bankUrl = dto.bank?.url ?: RESULT_IF_NULL,
-        bankPhone = dto.bank?.phone ?: RESULT_IF_NULL,
-        bankCity = dto.bank?.city ?: RESULT_IF_NULL
+        numberLength = dto?.number?.length ?: RESULT_IF_NULL,
+        nuberLuhn = dto?.number?.luhn,
+        scheme = dto?.scheme ?: RESULT_IF_NULL,
+        type = dto?.type,
+        brand = dto?.brand ?: RESULT_IF_NULL,
+        prepaid = dto?.prepaid,
+        countryName = dto?.country?.name ?: RESULT_IF_NULL,
+        countryEmoji = dto?.country?.emoji ?: RESULT_IF_NULL,
+        countryLatitude = dto?.country?.latitude ?: RESULT_IF_NULL,
+        countryLongitude = dto?.country?.longitude ?: RESULT_IF_NULL,
+        bankName = dto?.bank?.name ?: RESULT_IF_NULL,
+        bankUrl = dto?.bank?.url ?: RESULT_IF_NULL,
+        bankPhone = dto?.bank?.phone ?: RESULT_IF_NULL,
+        bankCity = dto?.bank?.city ?: RESULT_IF_NULL
+    )
+
+    fun mapDtoToDbModelIfEmpty(binId: String) = BinInfoDbModel(
+        binId = binId,
+        date = getTime(),
+        status = Status.NO_RESULT,
+        numberLength = null,
+        nuberLuhn = null,
+        scheme = null,
+        type = null,
+        brand = null,
+        prepaid = null,
+        countryName = null,
+        countryEmoji = null,
+        countryLatitude = null,
+        countryLongitude = null,
+        bankName = null,
+        bankUrl = null,
+        bankPhone = null,
+        bankCity = null
+    )
+
+    fun mapDtoToDbModelIfError(binId: String) = BinInfoDbModel(
+        binId = binId,
+        date = getTime(),
+        status = Status.ERROR,
+        numberLength = null,
+        nuberLuhn = null,
+        scheme = null,
+        type = null,
+        brand = null,
+        prepaid = null,
+        countryName = null,
+        countryEmoji = null,
+        countryLatitude = null,
+        countryLongitude = null,
+        bankName = null,
+        bankUrl = null,
+        bankPhone = null,
+        bankCity = null
     )
 
     fun mapDtoToEntityModel(dto: BinInfoDto, binId: String) = BinInfo(
@@ -72,13 +112,11 @@ class BinMapper {
         bankCity = binInfoDbDbModel?.bankCity
     )
 
-
     fun mapDbToEntityBinList(dbModel: BinListDb) = BinList(
         binId = dbModel.binId,
         date = convertTimestampToTime(dbModel.date),
         status = dbModel.status
     )
-
 
     private fun getTime(): Long {
         val date = Calendar.getInstance()
