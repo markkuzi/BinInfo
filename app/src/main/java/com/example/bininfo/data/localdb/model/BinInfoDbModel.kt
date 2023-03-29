@@ -3,10 +3,10 @@ package com.example.bininfo.data.localdb.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.bininfo.domain.entities.Status
+import com.example.bininfo.utils.Status
 
 @Entity(tableName = "bin_info_list")
-data class BinInfoModel(
+data class BinInfoDbModel(
     @PrimaryKey
     @ColumnInfo(name = "binId")
     val binId: String,
