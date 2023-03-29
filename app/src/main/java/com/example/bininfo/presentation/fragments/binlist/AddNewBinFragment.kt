@@ -33,7 +33,7 @@ class AddNewBinFragment : BottomSheetDialogFragment() {
 
         binding.submitCheckout.setOnClickListener {
             val binId = binding.etBinInput.text.toString()
-            binListViewModel.loadNewBin(binId)
+            //binListViewModel.loadNewBin(binId)
             launchBinInfoFragment(binId)
             dismiss()
         }

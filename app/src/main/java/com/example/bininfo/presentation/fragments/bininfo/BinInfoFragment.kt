@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.bininfo.R
 import com.example.bininfo.databinding.FragmentBinInfoBinding
+import com.example.bininfo.domain.entities.BinInfo
+import com.example.bininfo.utils.NetworkResult
+import com.example.bininfo.utils.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BinInfoFragment : Fragment() {
@@ -37,12 +41,9 @@ class BinInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (loadStatus) {
-            binInfoViewModel.loadNewBin(binId)
-        }
 
-        setupBinInfo()
-        setupPending()
+        binInfoViewModel.loadNewBin(binId)
+        loadBinInfo()
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -54,84 +55,106 @@ class BinInfoFragment : Fragment() {
         }
     }
 
-    private fun setupPending() {
-        binInfoViewModel.pendingStatus.observe(viewLifecycleOwner) {
-            if (!it) {
-                binding.container.visibility = View.GONE
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.container.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.GONE
+
+    private fun loadBinInfo() {
+        binInfoViewModel.binInfo.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Success -> {
+                    binding.container.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                    setupBinInfo(result.data)
+                }
+                is NetworkResult.Loading -> {
+                    binding.container.visibility = View.GONE
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is NetworkResult.Error -> {
+                    binding.container.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+                    when (result.message) {
+                        Status.NO_RESULT -> {
+                            Toast.makeText(
+                                requireContext(),
+                                result.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(
+                                requireContext(),
+                                result.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        else -> {}
+                    }
+                }
             }
         }
     }
 
-    private fun setupBinInfo() {
-        binInfoViewModel.getBinInfo(binId).observe(viewLifecycleOwner) {
-            with(binding) {
-                tvBinId.text = it?.binId
-                tvBinScheme.text = it?.scheme
-                tvBinBrand.text = it?.brand
-                tvBinCardLength.text = it?.numberLength
-                tvBinCardCountryImage.text = it?.countryEmoji
-                tvBinCardCountryName.text = it?.countryName
-                tvBinCardBankName.text = it?.bankName
-                tvBinCardBankAddress.text = it?.bankCity
-                tvBinCardBankSite.text = it?.bankUrl
-                tvBinCardBankPhone.text = it?.bankPhone
-                binding.tvBinCardCountryCoordinate.text = String.format(
-                    requireContext().resources.getString(R.string.bin_info_country_coordinate),
-                    it?.countryLatitude, it?.countryLongitude
-                )
+    private fun setupBinInfo(it: BinInfo?) {
 
+        with(binding) {
+            tvBinId.text = it?.binId
+            tvBinScheme.text = it?.scheme
+            tvBinBrand.text = it?.brand
+            tvBinCardLength.text = it?.numberLength
+            tvBinCardCountryImage.text = it?.countryEmoji
+            tvBinCardCountryName.text = it?.countryName
+            tvBinCardBankName.text = it?.bankName
+            tvBinCardBankAddress.text = it?.bankCity
+            tvBinCardBankSite.text = it?.bankUrl
+            tvBinCardBankPhone.text = it?.bankPhone
+            binding.tvBinCardCountryCoordinate.text = String.format(
+                requireContext().resources.getString(R.string.bin_info_country_coordinate),
+                it?.countryLatitude, it?.countryLongitude
+            )
 
-                when (it?.nuberLuhn) {
-                    true -> {
-                        tvBinCardLuhnYes.setTextColor(Color.WHITE)
-                        tvBinCardLuhnNo.setTextColor(Color.GRAY)
-                    }
-                    false -> {
-                        tvBinCardLuhnYes.setTextColor(Color.GRAY)
-                        tvBinCardLuhnNo.setTextColor(Color.WHITE)
-                    }
-                    null -> {
-                        tvBinCardLuhnYes.setTextColor(Color.GRAY)
-                        tvBinCardLuhnNo.setTextColor(Color.GRAY)
-                    }
+            when (it?.nuberLuhn) {
+                true -> {
+                    tvBinCardLuhnYes.setTextColor(Color.WHITE)
+                    tvBinCardLuhnNo.setTextColor(Color.GRAY)
                 }
-
-                when (it?.type) {
-                    DEBIT_CARD -> {
-                        tvBinCardTypeDebit.setTextColor(Color.WHITE)
-                        tvBinCardTypeCredit.setTextColor(Color.GRAY)
-                    }
-                    CREDIT_CARD -> {
-                        tvBinCardTypeDebit.setTextColor(Color.GRAY)
-                        tvBinCardTypeCredit.setTextColor(Color.WHITE)
-                    }
-                    null -> {
-                        tvBinCardTypeDebit.setTextColor(Color.GRAY)
-                        tvBinCardTypeCredit.setTextColor(Color.GRAY)
-                    }
+                false -> {
+                    tvBinCardLuhnYes.setTextColor(Color.GRAY)
+                    tvBinCardLuhnNo.setTextColor(Color.WHITE)
                 }
-
-                when (it?.prepaid) {
-                    true -> {
-                        tvBinCardPrepaidYes.setTextColor(Color.WHITE)
-                        tvBinCardPrepaidNo.setTextColor(Color.GRAY)
-                    }
-                    false -> {
-                        tvBinCardPrepaidYes.setTextColor(Color.GRAY)
-                        tvBinCardPrepaidNo.setTextColor(Color.WHITE)
-                    }
-                    null -> {
-                        tvBinCardPrepaidYes.setTextColor(Color.GRAY)
-                        tvBinCardPrepaidNo.setTextColor(Color.GRAY)
-                    }
+                null -> {
+                    tvBinCardLuhnYes.setTextColor(Color.GRAY)
+                    tvBinCardLuhnNo.setTextColor(Color.GRAY)
                 }
-
             }
 
+            when (it?.type) {
+                DEBIT_CARD -> {
+                    tvBinCardTypeDebit.setTextColor(Color.WHITE)
+                    tvBinCardTypeCredit.setTextColor(Color.GRAY)
+                }
+                CREDIT_CARD -> {
+                    tvBinCardTypeDebit.setTextColor(Color.GRAY)
+                    tvBinCardTypeCredit.setTextColor(Color.WHITE)
+                }
+                null -> {
+                    tvBinCardTypeDebit.setTextColor(Color.GRAY)
+                    tvBinCardTypeCredit.setTextColor(Color.GRAY)
+                }
+            }
+
+            when (it?.prepaid) {
+                true -> {
+                    tvBinCardPrepaidYes.setTextColor(Color.WHITE)
+                    tvBinCardPrepaidNo.setTextColor(Color.GRAY)
+                }
+                false -> {
+                    tvBinCardPrepaidYes.setTextColor(Color.GRAY)
+                    tvBinCardPrepaidNo.setTextColor(Color.WHITE)
+                }
+                null -> {
+                    tvBinCardPrepaidYes.setTextColor(Color.GRAY)
+                    tvBinCardPrepaidNo.setTextColor(Color.GRAY)
+                }
+            }
         }
     }
 

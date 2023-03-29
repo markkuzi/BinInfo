@@ -1,4 +1,4 @@
-package com.example.bininfo.domain.entities
+package com.example.bininfo.utils
 
 enum class Status {
     SUCCESS,
