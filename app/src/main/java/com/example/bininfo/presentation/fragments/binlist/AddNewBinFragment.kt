@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.bininfo.R
 import com.example.bininfo.databinding.FragmentAddNewBinBinding
 import com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment
+import com.example.bininfo.utils.Status
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,16 +34,16 @@ class AddNewBinFragment : BottomSheetDialogFragment() {
 
         binding.submitCheckout.setOnClickListener {
             val binId = binding.etBinInput.text.toString()
-            //binListViewModel.loadNewBin(binId)
-            launchBinInfoFragment(binId)
+
+            launchBinInfoFragment(binId, Status.NONE)
             dismiss()
         }
     }
 
-    private fun launchBinInfoFragment(binId: String) {
+    private fun launchBinInfoFragment(binId: String, status: Status) {
         val args = Bundle().apply {
             putString(BinInfoFragment.KEY_NEW_BIN, binId)
-            putBoolean(BinInfoFragment.KEY_LOAD_BIN, true)
+            putParcelable(BinInfoFragment.KEY_LOAD_BIN, status)
         }
         findNavController().navigate(R.id.action_binListFragment_to_binInfoFragment, args)
     }

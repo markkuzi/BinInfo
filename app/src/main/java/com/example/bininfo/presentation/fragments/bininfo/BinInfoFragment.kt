@@ -17,9 +17,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BinInfoFragment : Fragment() {
 
+    private lateinit var status: Status
     private val binInfoViewModel: BinInfoViewModel by viewModel()
     private var binId: String = DEFAULT_BIN_ID
-    private var loadStatus = false
 
     private var _binding: FragmentBinInfoBinding? = null
     private val binding: FragmentBinInfoBinding
@@ -42,9 +42,12 @@ class BinInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binInfoViewModel.loadNewBin(binId)
-        loadBinInfo()
+        setupStatusSet()
+        setupButtons()
 
+    }
+
+    private fun setupButtons() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -55,9 +58,39 @@ class BinInfoFragment : Fragment() {
         }
     }
 
+    private fun setupStatusSet() {
+        when (status) {
+            Status.SUCCESS -> {
+                binInfoViewModel.getBinInfo(binId)
+                getBinInfo()
+            }
+            Status.NO_RESULT -> {
+                //TODO()
+                binding.container.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+            }
+            Status.ERROR -> {
+                //TODO()
+                binding.container.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+            }
+            Status.NONE -> {
+                binInfoViewModel.loadNewBin(binId)
+                loadBinInfo()
+            }
+        }
+    }
+
+    private fun getBinInfo() {
+        binInfoViewModel.binInfo.observe(viewLifecycleOwner) {
+            setupBinInfo(it)
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
 
     private fun loadBinInfo() {
-        binInfoViewModel.binInfo.observe(viewLifecycleOwner) { result ->
+        binInfoViewModel.binNewInfo.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     binding.container.visibility = View.VISIBLE
@@ -73,6 +106,7 @@ class BinInfoFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     when (result.message) {
                         Status.NO_RESULT -> {
+                            //TODO()
                             Toast.makeText(
                                 requireContext(),
                                 result.message.toString(),
@@ -80,6 +114,7 @@ class BinInfoFragment : Fragment() {
                             ).show()
                         }
                         Status.ERROR -> {
+                            //TODO()
                             Toast.makeText(
                                 requireContext(),
                                 result.message.toString(),
@@ -162,8 +197,8 @@ class BinInfoFragment : Fragment() {
         requireArguments().getString(KEY_NEW_BIN)?.let {
             binId = it
         }
-        requireArguments().getBoolean(KEY_LOAD_BIN).let {
-            loadStatus = it
+        requireArguments().getParcelable<Status>(KEY_LOAD_BIN)?.let {
+            status = it
         }
     }
 

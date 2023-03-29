@@ -1,7 +1,12 @@
 package com.example.bininfo.utils
 
-enum class Status {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class Status: Parcelable {
     SUCCESS,
     NO_RESULT,
-    ERROR
+    ERROR,
+    NONE
 }

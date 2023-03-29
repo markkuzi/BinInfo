@@ -12,6 +12,7 @@ import com.example.bininfo.R
 import com.example.bininfo.databinding.FragmentBinListBinding
 import com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment
 import com.example.bininfo.presentation.fragments.binlist.adapter.BinListAdapter
+import com.example.bininfo.utils.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BinListFragment : Fragment() {
@@ -36,15 +37,16 @@ class BinListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupButtons()
 
 
+    }
+
+    private fun setupButtons() {
         binding.buttonAddNewBin.setOnClickListener {
             val addNewBin = AddNewBinFragment()
             addNewBin.show(requireActivity().supportFragmentManager, DIALOG_FRAGMENT_NAME)
-
         }
-
-
     }
 
     private fun setupRecyclerView() {
@@ -61,7 +63,7 @@ class BinListFragment : Fragment() {
 
     private fun setupClickListener() {
         binListAdapter.onBinItemListClickListener = {
-            launchBinInfoFragment(it.binId)
+            launchBinInfoFragment(it.binId, it.status)
         }
     }
 
@@ -103,18 +105,17 @@ class BinListFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = binListAdapter.currentList[viewHolder.adapterPosition]
-                binListViewModel.loadNewBin(item.binId)
-                launchBinInfoFragment(item.binId)
+                launchBinInfoFragment(item.binId, Status.NONE)
             }
-
         }
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(binding.rvBinList)
     }
 
-    private fun launchBinInfoFragment(binId: String) {
+    private fun launchBinInfoFragment(binId: String, status: Status) {
         val args = Bundle().apply {
             putString(BinInfoFragment.KEY_NEW_BIN, binId)
+            putParcelable(BinInfoFragment.KEY_LOAD_BIN, status)
         }
         findNavController().navigate(R.id.action_binListFragment_to_binInfoFragment, args)
     }
