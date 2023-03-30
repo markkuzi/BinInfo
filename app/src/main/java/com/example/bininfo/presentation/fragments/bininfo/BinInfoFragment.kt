@@ -56,6 +56,11 @@ class BinInfoFragment : Fragment() {
             binInfoViewModel.deleteBinById(binId)
             findNavController().popBackStack()
         }
+
+        binding.btnRetry.setOnClickListener {
+            binInfoViewModel.loadNewBin(binId)
+            loadBinInfo()
+        }
     }
 
     private fun setupStatusSet() {
@@ -65,14 +70,19 @@ class BinInfoFragment : Fragment() {
                 getBinInfo()
             }
             Status.NO_RESULT -> {
-                //TODO()
-                binding.container.visibility = View.GONE
+                binding.groupBinInfo.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
+                binding.groupError.visibility = View.VISIBLE
+                binding.tvBinError.text = String.format(
+                    getString(R.string.bin_request_empty),
+                    binId
+                )
             }
             Status.ERROR -> {
-                //TODO()
-                binding.container.visibility = View.GONE
+                binding.groupBinInfo.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
+                binding.groupError.visibility = View.VISIBLE
+                binding.tvBinError.text = getString(R.string.bin_request_error)
             }
             Status.NONE -> {
                 binInfoViewModel.loadNewBin(binId)
@@ -93,33 +103,34 @@ class BinInfoFragment : Fragment() {
         binInfoViewModel.binNewInfo.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
-                    binding.container.visibility = View.VISIBLE
+                    binding.groupBinInfo.visibility = View.VISIBLE
+                    binding.groupButton.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.GONE
+                    binding.groupError.visibility = View.GONE
                     setupBinInfo(result.data)
                 }
                 is NetworkResult.Loading -> {
-                    binding.container.visibility = View.GONE
+                    binding.groupButton.visibility = View.GONE
+                    binding.groupBinInfo.visibility = View.GONE
+                    binding.groupError.visibility = View.GONE
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is NetworkResult.Error -> {
-                    binding.container.visibility = View.GONE
+                    binding.groupBinInfo.visibility = View.GONE
                     binding.progressBar.visibility = View.GONE
                     when (result.message) {
                         Status.NO_RESULT -> {
-                            //TODO()
-                            Toast.makeText(
-                                requireContext(),
-                                result.message.toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            binding.groupButton.visibility = View.VISIBLE
+                            binding.groupError.visibility = View.VISIBLE
+                            binding.tvBinError.text = String.format(
+                                getString(R.string.bin_request_empty),
+                                binId
+                            )
                         }
                         Status.ERROR -> {
-                            //TODO()
-                            Toast.makeText(
-                                requireContext(),
-                                result.message.toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            binding.groupButton.visibility = View.VISIBLE
+                            binding.groupError.visibility = View.VISIBLE
+                            binding.tvBinError.text = getString(R.string.bin_request_error)
                         }
                         else -> {}
                     }
@@ -142,7 +153,7 @@ class BinInfoFragment : Fragment() {
             tvBinCardBankSite.text = it?.bankUrl
             tvBinCardBankPhone.text = it?.bankPhone
             binding.tvBinCardCountryCoordinate.text = String.format(
-                requireContext().resources.getString(R.string.bin_info_country_coordinate),
+                getString(R.string.bin_info_country_coordinate),
                 it?.countryLatitude, it?.countryLongitude
             )
 
