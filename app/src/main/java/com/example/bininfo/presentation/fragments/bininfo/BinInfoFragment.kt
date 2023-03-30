@@ -66,6 +66,9 @@ class BinInfoFragment : Fragment() {
     private fun setupStatusSet() {
         when (status) {
             Status.SUCCESS -> {
+                binding.groupBinInfo.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+                binding.groupError.visibility = View.GONE
                 binInfoViewModel.getBinInfo(binId)
                 getBinInfo()
             }

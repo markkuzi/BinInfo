@@ -8,7 +8,7 @@ import com.example.bininfo.data.repository.datasourceimpl.bin.BinApiDataSourceIm
 import com.example.bininfo.data.repository.datasourceimpl.bin.BinDataSourceImpl
 import com.example.bininfo.data.repository.repository.BinRepository
 import com.example.bininfo.domain.repository.BinCall
-import com.example.bininfo.domain.usecase.BinUseCase
+import com.example.bininfo.domain.usecase.*
 import com.example.bininfo.presentation.fragments.bininfo.BinInfoViewModel
 import com.example.bininfo.presentation.fragments.binlist.BinListViewModel
 import org.koin.android.ext.koin.androidContext
@@ -42,8 +42,13 @@ val moduleBin = module {
         )
     }
 
-    single { BinUseCase(get()) }
+   // single { BinUseCase(get()) }
+    single { DeleteBinByIdUseCase(get()) }
+    single { GetBinInfoUseCase(get()) }
+    single { GetBinListUseCase(get()) }
+    single { GetNetworkResultUseCase(get()) }
+    single { LoadNewBinUseCase(get()) }
 
-    viewModel { BinInfoViewModel(get()) }
-    viewModel { BinListViewModel(get()) }
+    viewModel { BinInfoViewModel(get(),get(),get(),get()) }
+    viewModel { BinListViewModel(get(), get()) }
 }
