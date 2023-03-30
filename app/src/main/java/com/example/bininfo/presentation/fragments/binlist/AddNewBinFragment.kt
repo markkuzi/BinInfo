@@ -10,11 +10,8 @@ import com.example.bininfo.databinding.FragmentAddNewBinBinding
 import com.example.bininfo.presentation.fragments.bininfo.BinInfoFragment
 import com.example.bininfo.utils.Status
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddNewBinFragment : BottomSheetDialogFragment() {
-
-    private val binListViewModel: BinListViewModel by viewModel()
 
     private var _binding: FragmentAddNewBinBinding? = null
     private val binding: FragmentAddNewBinBinding
@@ -32,9 +29,12 @@ class AddNewBinFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupButtons()
+    }
+
+    private fun setupButtons() {
         binding.submitCheckout.setOnClickListener {
             val binId = binding.etBinInput.text.toString()
-
             launchBinInfoFragment(binId, Status.NONE)
             dismiss()
         }
