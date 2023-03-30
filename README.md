@@ -1,6 +1,6 @@
 # BinInfo - тестовое задание конкурса проекта ШИФТ ЦФТ.
 ## Описание задачи
-___
+
 
 Реализовать Android-приложение со следующими функциями:
 1. Пользователь вводит [BIN](https://www.banki.ru/wikibank/bankovskiy_identifikatsionnyiy_nomer/) банковской карты и видит всю доступную информацию о нём,
@@ -10,7 +10,7 @@ ___
 3. Нажатие на URL банка, телефон банка, координаты страны отправляет пользователя в
 приложение, которое может обработать эти данные (браузер, звонилка, карты)
 ## Описание приложения
-___
+
 ### Главный экран
 На главном экране предсавлен список истории запросов и кнопка для создания нового запроса.
 
@@ -41,7 +41,7 @@ ___
 
 
 ## Стек
-___
+
 ![Language](https://img.shields.io/badge/Language-Kotlin-green)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
 ![Architecture Pattern](https://img.shields.io/badge/Architecture%20Pattern-MVVM-green)
