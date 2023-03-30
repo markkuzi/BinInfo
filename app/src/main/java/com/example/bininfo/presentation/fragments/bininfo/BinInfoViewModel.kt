@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bininfo.domain.entities.BinInfo
-import com.example.bininfo.domain.usecase.*
+import com.example.bininfo.domain.usecase.DeleteBinByIdUseCase
+import com.example.bininfo.domain.usecase.GetBinInfoUseCase
+import com.example.bininfo.domain.usecase.GetNetworkResultUseCase
+import com.example.bininfo.domain.usecase.LoadNewBinUseCase
 import kotlinx.coroutines.launch
 
 class BinInfoViewModel(

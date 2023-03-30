@@ -5,5 +5,4 @@ import com.example.bininfo.databinding.ItemBinBinding
 
 class BinItemListViewHolder(
     val binding: ItemBinBinding
-): RecyclerView.ViewHolder(binding.root) {
-}
+): RecyclerView.ViewHolder(binding.root)
