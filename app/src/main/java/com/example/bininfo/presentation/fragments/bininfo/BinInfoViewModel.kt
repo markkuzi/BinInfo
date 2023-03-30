@@ -5,29 +5,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bininfo.domain.entities.BinInfo
-import com.example.bininfo.domain.usecase.BinUseCase
+import com.example.bininfo.domain.usecase.*
 import kotlinx.coroutines.launch
 
 class BinInfoViewModel(
-    private val binUseCase: BinUseCase
+    private val getNetworkResultUseCase: GetNetworkResultUseCase,
+    private val getBinInfoUseCase: GetBinInfoUseCase,
+    private val loadNewBinUseCase: LoadNewBinUseCase,
+    private val deleteBinByIdUseCase: DeleteBinByIdUseCase
 ) : ViewModel() {
 
     private val _binInfo = MutableLiveData<BinInfo>()
     val binInfo: LiveData<BinInfo>
         get() = _binInfo
 
-    val binNewInfo = binUseCase.getResult()
+    val binNewInfo by lazy { getNetworkResultUseCase() }
 
     fun getBinInfo(binId: String) = viewModelScope.launch {
-        _binInfo.postValue(binUseCase.getBinInfo(binId))
+        _binInfo.postValue(getBinInfoUseCase.invoke(binId))
     }
 
     fun loadNewBin(binId: String) = viewModelScope.launch {
-        binUseCase.loadNewBin(binId)
+        loadNewBinUseCase(binId)
     }
 
     fun deleteBinById(binId: String) = viewModelScope.launch {
-        binUseCase.deleteBinById(binId)
+        deleteBinByIdUseCase(binId)
     }
 
 
