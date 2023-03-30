@@ -22,9 +22,12 @@
     <string name="bin_info_bank_head">BANK</string>
     <string name="btn_back">BACK</string>
     <string name="btn_delete">DELETE</string>
+    <string name="btn_retry">RETRY</string>
     <string name="bin_info_error">Internet not working</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="enter_bin">Enter first digits of a card number (BIN/IIN)</string>
     <string name="add_new_binn">SEARCH BIN INFO</string>
+    <string name="bin_request_empty">Информации по заданному BIN/INN: %s нет на сервере!</string>
+    <string name="bin_request_error">При запросе на сервер возникла проблема, проверьте интернет соединение!</string>
 
 </resources>
