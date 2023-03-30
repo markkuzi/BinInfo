@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.bininfo.R
@@ -48,44 +47,39 @@ class BinInfoFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        with(binding) {
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
-        binding.btnDelete.setOnClickListener {
-            binInfoViewModel.deleteBinById(binId)
-            findNavController().popBackStack()
-        }
+            btnDelete.setOnClickListener {
+                binInfoViewModel.deleteBinById(binId)
+                findNavController().popBackStack()
+            }
 
-        binding.btnRetry.setOnClickListener {
-            binInfoViewModel.loadNewBin(binId)
-            loadBinInfo()
+            btnRetry.setOnClickListener {
+                binInfoViewModel.loadNewBin(binId)
+                loadBinInfo()
+            }
         }
     }
 
     private fun setupStatusSet() {
         when (status) {
             Status.SUCCESS -> {
-                binding.groupBinInfo.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.GONE
-                binding.groupError.visibility = View.GONE
+                setupSuccessVisibility()
                 binInfoViewModel.getBinInfo(binId)
-                getBinInfo()
+                binInfoViewModel.binInfo.observe(viewLifecycleOwner) {
+                    setupBinInfo(it)
+                }
             }
             Status.NO_RESULT -> {
-                binding.groupBinInfo.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
-                binding.groupError.visibility = View.VISIBLE
-                binding.tvBinError.text = String.format(
-                    getString(R.string.bin_request_empty),
-                    binId
-                )
+                setupErrorVisibility()
+                setupMessageTextIfNoResult()
             }
             Status.ERROR -> {
-                binding.groupBinInfo.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
-                binding.groupError.visibility = View.VISIBLE
-                binding.tvBinError.text = getString(R.string.bin_request_error)
+                setupErrorVisibility()
+                setupMessageTextIfError()
             }
             Status.NONE -> {
                 binInfoViewModel.loadNewBin(binId)
@@ -94,46 +88,25 @@ class BinInfoFragment : Fragment() {
         }
     }
 
-    private fun getBinInfo() {
-        binInfoViewModel.binInfo.observe(viewLifecycleOwner) {
-            setupBinInfo(it)
-            binding.progressBar.visibility = View.GONE
-        }
-    }
-
-
     private fun loadBinInfo() {
         binInfoViewModel.binNewInfo.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is NetworkResult.Success -> {
-                    binding.groupBinInfo.visibility = View.VISIBLE
-                    binding.groupButton.visibility = View.VISIBLE
-                    binding.progressBar.visibility = View.GONE
-                    binding.groupError.visibility = View.GONE
+                    setupSuccessVisibility()
                     setupBinInfo(result.data)
                 }
                 is NetworkResult.Loading -> {
-                    binding.groupButton.visibility = View.GONE
-                    binding.groupBinInfo.visibility = View.GONE
-                    binding.groupError.visibility = View.GONE
-                    binding.progressBar.visibility = View.VISIBLE
+                    setupLoadingVisibility()
                 }
                 is NetworkResult.Error -> {
-                    binding.groupBinInfo.visibility = View.GONE
-                    binding.progressBar.visibility = View.GONE
-                    when (result.message) {
+                    when (result.status) {
                         Status.NO_RESULT -> {
-                            binding.groupButton.visibility = View.VISIBLE
-                            binding.groupError.visibility = View.VISIBLE
-                            binding.tvBinError.text = String.format(
-                                getString(R.string.bin_request_empty),
-                                binId
-                            )
+                            setupErrorVisibility()
+                            setupMessageTextIfNoResult()
                         }
                         Status.ERROR -> {
-                            binding.groupButton.visibility = View.VISIBLE
-                            binding.groupError.visibility = View.VISIBLE
-                            binding.tvBinError.text = getString(R.string.bin_request_error)
+                            setupErrorVisibility()
+                            setupMessageTextIfError()
                         }
                         else -> {}
                     }
@@ -142,8 +115,45 @@ class BinInfoFragment : Fragment() {
         }
     }
 
-    private fun setupBinInfo(it: BinInfo?) {
+    private fun setupMessageTextIfError() {
+        binding.tvBinError.text = getString(R.string.bin_request_error)
+    }
 
+    private fun setupMessageTextIfNoResult() {
+        binding.tvBinError.text = String.format(
+            getString(R.string.bin_request_empty),
+            binId
+        )
+    }
+
+    private fun setupErrorVisibility() {
+        with(binding) {
+            groupBinInfo.visibility = View.GONE
+            groupButton.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            groupError.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupLoadingVisibility() {
+        with(binding) {
+            groupButton.visibility = View.GONE
+            groupBinInfo.visibility = View.GONE
+            groupError.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupSuccessVisibility() {
+        with(binding) {
+            groupBinInfo.visibility = View.VISIBLE
+            groupButton.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            groupError.visibility = View.GONE
+        }
+    }
+
+    private fun setupBinInfo(it: BinInfo?) {
         with(binding) {
             tvBinId.text = it?.binId
             tvBinScheme.text = it?.scheme
@@ -159,8 +169,15 @@ class BinInfoFragment : Fragment() {
                 getString(R.string.bin_info_country_coordinate),
                 it?.countryLatitude, it?.countryLongitude
             )
+            setupBinNumberLuhn(it?.numberLuhn)
+            setupBinType(it?.type)
+            setupBinPrepaid(it?.prepaid)
+        }
+    }
 
-            when (it?.nuberLuhn) {
+    private fun setupBinNumberLuhn(numberLuhn: Boolean?) {
+        with(binding) {
+            when (numberLuhn) {
                 true -> {
                     tvBinCardLuhnYes.setTextColor(Color.WHITE)
                     tvBinCardLuhnNo.setTextColor(Color.GRAY)
@@ -174,8 +191,12 @@ class BinInfoFragment : Fragment() {
                     tvBinCardLuhnNo.setTextColor(Color.GRAY)
                 }
             }
+        }
+    }
 
-            when (it?.type) {
+    private fun setupBinType(type: String?) {
+        with(binding) {
+            when (type) {
                 DEBIT_CARD -> {
                     tvBinCardTypeDebit.setTextColor(Color.WHITE)
                     tvBinCardTypeCredit.setTextColor(Color.GRAY)
@@ -189,8 +210,12 @@ class BinInfoFragment : Fragment() {
                     tvBinCardTypeCredit.setTextColor(Color.GRAY)
                 }
             }
+        }
+    }
 
-            when (it?.prepaid) {
+    private fun setupBinPrepaid(prepaid: Boolean?) {
+        with(binding) {
+            when (prepaid) {
                 true -> {
                     tvBinCardPrepaidYes.setTextColor(Color.WHITE)
                     tvBinCardPrepaidNo.setTextColor(Color.GRAY)
@@ -229,6 +254,4 @@ class BinInfoFragment : Fragment() {
         const val KEY_NEW_BIN = "new_bin"
         const val KEY_LOAD_BIN = "load_bin"
     }
-
-
 }

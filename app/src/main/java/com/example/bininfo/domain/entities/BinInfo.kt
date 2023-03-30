@@ -7,7 +7,7 @@ data class BinInfo(
     val date: String,
     val status: Status,
     val numberLength: String?,
-    val nuberLuhn: Boolean?,
+    val numberLuhn: Boolean?,
     val scheme: String?,
     val type: String?,
     val brand: String?,

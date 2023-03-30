@@ -17,7 +17,7 @@ data class BinInfoDbModel(
     @ColumnInfo(name = "numberLength")
     val numberLength: String?,
     @ColumnInfo(name = "nuberLuhn")
-    val nuberLuhn: Boolean?,
+    val numberLuhn: Boolean?,
     @ColumnInfo(name = "scheme")
     val scheme: String?,
     @ColumnInfo(name = "type")

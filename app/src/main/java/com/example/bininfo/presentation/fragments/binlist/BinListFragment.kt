@@ -39,7 +39,6 @@ class BinListFragment : Fragment() {
         setupRecyclerView()
         setupButtons()
 
-
     }
 
     private fun setupButtons() {
@@ -55,7 +54,6 @@ class BinListFragment : Fragment() {
         binListViewModel.binHistoryList.observe(viewLifecycleOwner) {
             binListAdapter.submitList(it)
         }
-
         setupClickListener()
         setupSwipeLeftListener()
         setupSwipeRightListener()
@@ -79,12 +77,10 @@ class BinListFragment : Fragment() {
             ): Boolean {
                 return false
             }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = binListAdapter.currentList[viewHolder.adapterPosition]
                 binListViewModel.deleteBinById(item.binId)
             }
-
         }
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(binding.rvBinList)
@@ -102,7 +98,6 @@ class BinListFragment : Fragment() {
             ): Boolean {
                 return false
             }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = binListAdapter.currentList[viewHolder.adapterPosition]
                 launchBinInfoFragment(item.binId, Status.NONE)
