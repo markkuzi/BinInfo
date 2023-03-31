@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BinInfo</string>
     <string name="bin_id_name">Bin ID:</string>
-    <string name="bin_date_name">Дата запроса:</string>
-    <string name="bin_status_name">Статус запроса:</string>
+    <string name="bin_date_name">Request date:</string>
+    <string name="bin_status_name">Request status:</string>
     <string name="bin_info_id_head">First digits of a card number (BIN/IIN):</string>
     <string name="bin_info_scheme_head">SCHEME / NETWORK</string>
     <string name="bin_info_brand_head">BRAND</string>
@@ -27,7 +27,7 @@
     <string name="try_again">TRY AGAIN</string>
     <string name="enter_bin">Enter first digits of a card number (BIN/IIN)</string>
     <string name="add_new_binn">SEARCH BIN INFO</string>
-    <string name="bin_request_empty">Информации по заданному BIN/INN: %s нет на сервере!</string>
-    <string name="bin_request_error">При запросе на сервер возникла проблема, проверьте интернет соединение!</string>
+    <string name="bin_request_empty">BIN/INN: %s does not exist!</string>
+    <string name="bin_request_error">Network error!</string>
 
 </resources>
